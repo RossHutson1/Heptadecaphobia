@@ -13,7 +13,7 @@ public class GameWorld {
     }
 
     public GameWorld (int midPointY) {
-    	truck = new Firetruck(100, midPointY, 76, 105);
+    	truck = new Firetruck(45, 45, 76, 105);
     	currentState = GameState.READY;
     }
 

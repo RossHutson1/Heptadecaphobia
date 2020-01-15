@@ -93,7 +93,7 @@ public class GameRenderer {
         	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX(),
             		truck.getY(), truck.getWidth() / 2.0f,
             		truck.getHeight() / 2.0f, truck.getWidth(), truck.getHeight(),
-            		1, 1, truck.getRotation());
+            		0.2f, 0.2f, truck.getRotation());
         }
         
         // End SpriteBatch
