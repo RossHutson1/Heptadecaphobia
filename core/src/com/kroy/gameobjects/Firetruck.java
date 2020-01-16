@@ -16,6 +16,7 @@ public class Firetruck extends GameObject{
     
     private boolean startMove;
     private boolean notDestroyed;
+    private Weapon firehose= new Weapon(1,3,10);
 
     public Firetruck(int x, int y, int width, int height) {
         this.width = width;
@@ -111,6 +112,17 @@ public class Firetruck extends GameObject{
     	this.velocity.y = 0;
     	this.velocity.x = 0;
     	this.notDestroyed = false;
+    }
+    public void refill() {
+    	this.firehose.setNumProjectiles(10);
+    }
+    
+    public void repair() {
+    	this.hpCurrent = this.hpMax;
+    }
+    
+    public void fireWeapon() {
+    	this.firehose.fire();
     }
 
 }
