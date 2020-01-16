@@ -107,4 +107,11 @@ public class GameTest {
 		fort.damage();
 		assertEquals(fort.getHpCurrent(),9);
 	}
+	@Test
+	public void testFort() {
+		Fortress fort = new Fortress(1);
+		assertEquals(fort.getHpCurrent(),10);
+		fort.damage();
+		assertEquals(fort.getHpCurrent(),9);
+	}
 }
