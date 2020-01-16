@@ -16,6 +16,7 @@ public class AssetLoader {
     public static Animation truckLeftAnimation;
     public static TextureRegion truck, truckLeft, truckRight, truck1, truckLeft1, truckRight1;
     public static BitmapFont font, shadow;
+    public static Texture map;
 
     public static void load() {
 
@@ -49,6 +50,8 @@ public class AssetLoader {
         truckAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         truckLeftAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         truckRightAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        
+        map = new Texture(Gdx.files.internal("KroyTexture.png"));
         
         font = new BitmapFont(Gdx.files.internal("text.fnt"));
         font.getData().setScale(.75f, -.75f);
