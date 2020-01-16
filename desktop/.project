@@ -24,7 +24,11 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
+<<<<<<< HEAD
 			<location>H:/git/Heptadecaphobia22/core/assets</location>
+=======
+			<location>H:/git/Heptadecaphobia/core/assets</location>
+>>>>>>> branch 'master' of https://github.com/RossHutson1/Heptadecaphobia.git
 		</link>
 	</linkedResources>
 </projectDescription>
