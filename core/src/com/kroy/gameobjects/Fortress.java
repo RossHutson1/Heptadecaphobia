@@ -1,4 +1,7 @@
 package com.kroy.gameobjects;
+
+import java.util.ArrayList;
+
 //Possibly still need to implement more methods here
 //such as a method to add water?
 
@@ -25,4 +28,16 @@ public class Fortress extends GameObject{
 	private void levelUp() {
 		
 	};
+	public void findTrucks(ArrayList<Firetruck> trucklist) {
+		//ArrayList<Firetruck> trucks = 
+		for (double x=  this.position.x-2; x<=this.position.x+2; x+=1) {
+			for (double y=  this.position.y-2; y<=this.position.y+2; y+=1) {
+				for (Firetruck truck : trucklist) {
+					if (x == (truck.getX()) && y == (truck.getY())) {
+						truck.fireWeapon(this.position);
+					}
+				}
+			}
+		}
+	}
 }

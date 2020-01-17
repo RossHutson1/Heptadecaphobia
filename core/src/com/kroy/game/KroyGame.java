@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.kroy.gameobjects.Firetruck;
+import com.kroy.gameobjects.Fortress;
 import com.kroy.gameobjects.GameObject;
 import com.kroy.gameobjects.Projectile;
 import com.kroy.helpers.AssetLoader;
@@ -17,16 +19,15 @@ public class KroyGame extends Game {
 	EventListener eventListener = new EventListener();
 	Map map = new Map();
 	FireStation fireStation = new FireStation(0, 0, 0);
-	ArrayList<Object> patrolList = new ArrayList<Object>();
-	ArrayList<Object> truckList = new ArrayList<Object>();
-	
-	/*/
-	ArrayList<Object> fortressList = new ArrayList<Object>();
+	ArrayList<Object> patrolList = new ArrayList<Object>();/*/
+	ArrayList<Firetruck> truckList = new ArrayList<Firetruck>();
+	ArrayList<Fortress> fortressList = new ArrayList<Fortress>();
 	@Override
 	public void create() {
 		Gdx.app.log("Game", "created");
 		AssetLoader.load();
 		setScreen(new GameScreen());
+		
 		
 	}
 	
@@ -48,6 +49,9 @@ public class KroyGame extends Game {
 	public int getTest() {
 		return test;
 	}
+	public ArrayList<Firetruck> getTruckList() {
+		return this.truckList;
+	}
 	public static boolean isLost(ArrayList<Object> firetruckList) {
 		
 		if (firetruckList.isEmpty()) {
@@ -58,25 +62,30 @@ public class KroyGame extends Game {
 		}
 		
 	}
-	public void objectHit(GameObject object, Projectile projectile) {
-		if (projectile.getPosition() == object.getPosition()) {
-			object.damage();
+	public void truckFiresAtFortress() {
+		for(Fortress fort: this.fortressList) {
+			fort.findTrucks(this.truckList);
 		}
 	}
-	/*/
-	public static FireTruck generateFireTruck() {
-		FireTruck newTruck = new FireTruck(0, 0);
+	//public void objectHit(GameObject object, Projectile projectile) {
+		//if (projectile.getPosition() == object.getPosition()) {
+			//object.damage();
+		//}
+	//}
+	
+	public static Firetruck generateFireTruck() {
+		Firetruck newTruck = new Firetruck(0, 0,72,105);
 		return newTruck;
 	}
 	
-	public static Patrol spawnPatrol() {
-		Patrol newPatrol = new Patrol(0);
-		return newPatrol;
-	}
+	//public static Patrol spawnPatrol() {
+		//Patrol newPatrol = new Patrol(0);
+		//return newPatrol;
+	//}
 	
 	public static Fortress generateFortress() {
 		Fortress newFortress = new Fortress(0);
 		return newFortress;
 	}
-	/*/
+	
 }

@@ -2,6 +2,8 @@ package com.kroy.gameobjects;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Weapon {
 
 	private int damage, firerate, range;
@@ -19,8 +21,9 @@ public class Weapon {
 		this.numProjectiles = numProjectiles;
 		//this.texture = texture;
 	}
-	public void fire() {
+	public void fire(Vector2 fortPosition) {
 		this.numProjectiles -=1;
+		Projectile projectile = new Projectile()
 	}
 	public int getDamage() {
 		return this.damage;

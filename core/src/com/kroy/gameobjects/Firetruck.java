@@ -137,8 +137,8 @@ public class Firetruck extends GameObject{
     	this.hpCurrent = this.hpMax;
     }
     
-    public void fireWeapon() {
-    	this.firehose.fire();
+    public void fireWeapon(Vector2 fortPosition) {
+    	this.firehose.fire(fortPosition);
     }
 
 }
