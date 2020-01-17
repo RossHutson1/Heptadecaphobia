@@ -59,6 +59,7 @@ private void initAssets() {
     backgroundTexture = AssetLoader.map;
     background = new Sprite(backgroundTexture);
     background.flip(false,  true);
+    background.setScale(0.945f);
 }
 
 public void render(float runTime) {
@@ -115,10 +116,10 @@ public void gameOver() {
 
 public void gameRunning(float runTime) {
 	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX(),
-    		truck.getY(), 0,
-    		0, truck.getWidth(), truck.getHeight(),
+    		truck.getY()+20, 36f,
+    		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
-	batcher.draw(minsterTexture, 1710, 45);
+	batcher.draw(minsterTexture, 1665, 90);
 }
 
 public void moveCamera() {

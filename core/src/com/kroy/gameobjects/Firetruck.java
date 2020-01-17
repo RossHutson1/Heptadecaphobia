@@ -13,6 +13,8 @@ public class Firetruck extends GameObject{
     private int height;
     private int goalX;
     private int goalY;
+    private int offsetX;
+    private int offsetY;
     
     private boolean startMove;
     private boolean notDestroyed;
@@ -107,6 +109,16 @@ public class Firetruck extends GameObject{
     
     public Vector2 getVelocity() {
     	return this.velocity;
+    }
+    
+    public int getOffsetX() {
+    	
+    	return this.offsetX;
+    }
+    
+    public int getOffsetY() {
+    	
+    	return this.offsetY;
     }
     
     public void onRestart() {
