@@ -2,7 +2,9 @@ package com.kroy.gameworld;
 
 import com.kroy.helpers.InputHandler;
 
-import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType; import com.kroy.gameobjects.Firetruck; import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.kroy.gameobjects.Firetruck; import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameRenderer {
 
@@ -56,6 +58,7 @@ private void initAssets() {
     
     backgroundTexture = AssetLoader.map;
     background = new Sprite(backgroundTexture);
+    background.flip(false,  true);
 }
 
 public void render(float runTime) {
@@ -114,13 +117,14 @@ public void gameRunning(float runTime) {
 	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX(),
     		truck.getY(), 0,
     		0, truck.getWidth(), truck.getHeight(),
-    		1, 1, truck.getRotation());
-	batcher.draw(minsterTexture, 1620, 45);
+    		0.3f, 0.3f, truck.getRotation());
+	batcher.draw(minsterTexture, 1710, 45);
 }
 
 public void moveCamera() {
 	System.out.println(cam.position);
-	cam.translate(1f,1f);
+	Vector2 truckVelocity = truck.getVelocity();
+	cam.translate(truckVelocity.x, truckVelocity.y);
 	System.out.println(cam.position.x);
 	System.out.println();
 	cam.update();

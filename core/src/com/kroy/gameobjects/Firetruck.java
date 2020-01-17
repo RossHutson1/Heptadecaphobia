@@ -105,6 +105,10 @@ public class Firetruck extends GameObject{
     	return this.notDestroyed;
     }
     
+    public Vector2 getVelocity() {
+    	return this.velocity;
+    }
+    
     public void onRestart() {
     	this.rotation = 0;
     	this.position.y = 45;
