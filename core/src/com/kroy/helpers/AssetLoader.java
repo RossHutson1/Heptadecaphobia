@@ -12,22 +12,14 @@ public class AssetLoader {
     public static Texture texture;
 
     public static Animation truckAnimation;
-    public static Animation truckRightAnimation;
-    public static Animation truckLeftAnimation;
-    public static TextureRegion truck, truckLeft, truckRight, truck1, truckLeft1, truckRight1;
+    public static TextureRegion truck, truck1;
     public static BitmapFont font, shadow;
-    public static Texture map;
+    public static Texture map, minster;
 
     public static void load() {
 
         texture = new Texture(Gdx.files.internal("KroyTexture.png"));
         texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-        truckLeft = new TextureRegion(texture, 154, 1, 76, 105);
-        truckLeft.flip(false, true);
-        
-        truckLeft1 = new TextureRegion(texture, 230, 1, 76, 105);
-        truckLeft1.flip(false, true);
 
         truck = new TextureRegion(texture, 5, 1, 72, 105);
         truck.flip(false, true);
@@ -35,23 +27,12 @@ public class AssetLoader {
         truck1 = new TextureRegion(texture, 80, 1, 72, 105);
         truck1.flip(false, true);
 
-        truckRight = new TextureRegion(texture, 1, 110, 76, 105);
-        truckRight.flip(false, true);
-        
-        truckRight1 = new TextureRegion(texture, 79, 110, 76, 105);
-        truckRight1.flip(false, true);
-
         TextureRegion[] truckStraight = { truck, truck1 };
-        TextureRegion[] truckLeftAni = { truckLeft, truckLeft1 };
-        TextureRegion[] truckRightAni = { truckRight, truckRight1 };
         truckAnimation = new Animation(0.1f, truckStraight);
-        truckLeftAnimation = new Animation(0.1f, truckLeftAni);
-        truckRightAnimation = new Animation(0.1f, truckRightAni);
         truckAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        truckLeftAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        truckRightAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         
-        map = new Texture(Gdx.files.internal("KroyTexture.png"));
+        map = new Texture(Gdx.files.internal("map.png"));
+        minster = new Texture(Gdx.files.internal("Minster.png"));
         
         font = new BitmapFont(Gdx.files.internal("text.fnt"));
         font.getData().setScale(.75f, -.75f);

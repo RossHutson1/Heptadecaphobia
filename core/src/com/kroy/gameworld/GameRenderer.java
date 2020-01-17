@@ -13,10 +13,10 @@ private InputHandler inputHandler;
 private SpriteBatch batcher;
 
 private Firetruck truck;
-private Animation truckAnimation, truckLeftAnimation, truckRightAnimation;
-private TextureRegion truckStraight, truckLeft, truckRight, truckStraight1, truckLeft1, truckRight1;
+private Animation truckAnimation;
+private TextureRegion truckStraight, truckStraight1;
 
-private Texture backgroundTexture;
+private Texture backgroundTexture, minsterTexture;
 private Sprite background;
 
 
@@ -49,14 +49,10 @@ private void initGameObjects() {
 
 private void initAssets() {
     truckAnimation = AssetLoader.truckAnimation;
-    truckLeftAnimation = AssetLoader.truckLeftAnimation;
-    truckRightAnimation = AssetLoader.truckRightAnimation;
     truckStraight = AssetLoader.truck;
-    truckLeft = AssetLoader.truckLeft;
-    truckRight = AssetLoader.truckRight;
     truckStraight1 = AssetLoader.truck1;
-    truckLeft1 = AssetLoader.truckLeft1;
-    truckRight1 = AssetLoader.truckRight1;
+    
+    minsterTexture = AssetLoader.minster;
     
     backgroundTexture = AssetLoader.map;
     background = new Sprite(backgroundTexture);
@@ -119,6 +115,7 @@ public void gameRunning(float runTime) {
     		truck.getY(), 0,
     		0, truck.getWidth(), truck.getHeight(),
     		1, 1, truck.getRotation());
+	batcher.draw(minsterTexture, 1620, 45);
 }
 
 public void moveCamera() {
