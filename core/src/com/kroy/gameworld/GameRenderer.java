@@ -75,7 +75,7 @@ public void render(float runTime) {
 
         // Draw Background colour
         shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-        shapeRenderer.rect(0, 0, 500, Gdx.graphics.getHeight());
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         shapeRenderer.end();
     } else {
@@ -99,14 +99,11 @@ public void render(float runTime) {
     
     // End SpriteBatch
     batcher.end();
-    
-    
-
 }
 
 public void startMenu() {
-	AssetLoader.shadow.draw(batcher, "Click to Start", 50, 100);
-    AssetLoader.font.draw(batcher, "Click to Start", 50, 100);
+	AssetLoader.shadow.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
+    AssetLoader.font.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
 }
 
 public void gameOver() {
@@ -115,19 +112,19 @@ public void gameOver() {
 }
 
 public void gameRunning(float runTime) {
+	batcher.draw(minsterTexture, 1665, 90);
 	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX(),
     		truck.getY()+20, 36f,
     		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
-	batcher.draw(minsterTexture, 1665, 90);
 }
 
 public void moveCamera() {
-	System.out.println(cam.position);
 	Vector2 truckVelocity = truck.getVelocity();
-	cam.translate(truckVelocity.x, truckVelocity.y);
-	System.out.println(cam.position.x);
-	System.out.println();
+	cam.position.x = truck.getX() + 40f;
+	cam.position.y = truck.getY() + 65f;
+	Gdx.app.log("Cam Pos", cam.position.x + " ");
+	Gdx.app.log("Truck pos", truck.getX() + " ");
 	cam.update();
 }
 }

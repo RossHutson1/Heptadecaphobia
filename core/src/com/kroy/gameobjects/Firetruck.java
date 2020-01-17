@@ -13,8 +13,6 @@ public class Firetruck extends GameObject{
     private int height;
     private int goalX;
     private int goalY;
-    private int offsetX;
-    private int offsetY;
     
     private boolean startMove;
     private boolean notDestroyed;
@@ -52,9 +50,7 @@ public class Firetruck extends GameObject{
     		this.velocity.x = 0;
     	}
     	if (this.position.x%45!=0 || moving) {
-    		this.position.add(this.velocity);
-    		moving = false;
-    		this.startMove = false;
+    		this.startMove = true;
     	}
     }
     
@@ -71,9 +67,7 @@ public class Firetruck extends GameObject{
     		this.velocity.y = 0;
     	}
     	if (this.position.y%45!=0 || moving) {
-    		this.position.add(this.velocity);
-    		moving = false;
-    		this.startMove = false;
+    		this.startMove = true;
     	}
     }
 
@@ -111,14 +105,8 @@ public class Firetruck extends GameObject{
     	return this.velocity;
     }
     
-    public int getOffsetX() {
-    	
-    	return this.offsetX;
-    }
-    
-    public int getOffsetY() {
-    	
-    	return this.offsetY;
+    public void startMove() {
+    	this.startMove = true;
     }
     
     public void onRestart() {
