@@ -24,11 +24,11 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-<<<<<<< HEAD
+
 			<location>H:/git/Heptadecaphobia/core/assets</location>
-=======
+
 			<location>//userfs/ab2474/w2k/git/Heptadecaphobia/core/assets</location>
->>>>>>> branch 'master' of https://github.com/RossHutson1/Heptadecaphobia.git
+
 		</link>
 	</linkedResources>
 </projectDescription>
