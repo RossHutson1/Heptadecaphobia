@@ -74,9 +74,16 @@ public class KroyGame extends Game {
 		}
 		
 	}
+
 	public void truckFiresAtFortress() {
 		for(Fortress fort: this.fortressList) {
 			fort.findTrucks(this.truckList);
+		}
+	}
+	/*/
+	public void objectHit(GameObject object, Projectile projectile) {
+		if (projectile.getPosition() == object.getPosition()) {
+			object.damage();
 		}
 	}
 	//public void objectHit(GameObject object, Projectile projectile) {
@@ -84,9 +91,10 @@ public class KroyGame extends Game {
 			//object.damage();
 		//}
 	//}
-	
+	*/
+
 	public static Firetruck generateFireTruck() {
-		Firetruck newTruck = new Firetruck(0, 0,72,105);
+		Firetruck newTruck = new Firetruck(0, 0, 0, 0);
 		return newTruck;
 	}
 	

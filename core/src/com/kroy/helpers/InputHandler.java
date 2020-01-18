@@ -1,50 +1,73 @@
 package com.kroy.helpers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameworld.GameWorld;
 
 public class InputHandler implements InputProcessor {
 	
-	private Firetruck myTruck;
 	private GameWorld myWorld;
 	private int mouseX;
 	private int mouseY;
+	private Vector2 cameraVel;
+	private float zoom;
 	
 	public InputHandler(GameWorld myWorld) {
 		this.myWorld = myWorld;
-		myTruck = myWorld.getFiretruck();
+		cameraVel = new Vector2(0, 0);
+		zoom = 0;
 	}
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		if (keycode == Input.Keys.W) {
+			cameraVel.y = -5;
+		} else if (keycode == Input.Keys.S) {
+			cameraVel.y = 5;
+		} 
+		if (keycode == Input.Keys.D) {
+			cameraVel.x = 5;
+		} else if (keycode == Input.Keys.A) {
+			cameraVel.x= -5;
+		}
+		
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+		if (keycode == Input.Keys.W) {
+			cameraVel.y = 0;
+		} else if (keycode == Input.Keys.S) {
+			cameraVel.y = 0;
+		} 
+		if (keycode == Input.Keys.D) {
+			cameraVel.x = 0;
+		} else if (keycode == Input.Keys.A) {
+			cameraVel.x = 0;
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		if (character == 'w') {
-			myTruck.moveY(true,  true);
-		} else if (character == 's') {
-			myTruck.moveY(true,  false);
-		} else if (character == 'd') {
-			myTruck.moveX(true,  true);
-		} else if (character == 'a') {
-			myTruck.moveX(true,  false);
-		}
 		return false;
 	}
-
+	
+	public Vector2 getCameraDelta() {
+		return new Vector2(cameraVel);
+	}
+	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		myWorld.onClick(Gdx.input.getX(), Gdx.input.getY());
+		/*/
 		if (myWorld.isReady()) {
 			myWorld.start();
 		} else if (myWorld.isRunning()) {
@@ -56,6 +79,7 @@ public class InputHandler implements InputProcessor {
 		if (myWorld.isGameOver()) {
 			myWorld.restart();
 		}
+		/*/
 		
 		return true;
 	}
@@ -80,8 +104,15 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
+		float zoomSpeed = 0.2f;
+		zoom += amount * zoomSpeed;
 		return false;
+	}
+	
+	public float getZoom() {
+		float zoomChange = zoom;
+		zoom = 0;
+		return zoomChange;
 	}
 
 }
