@@ -136,7 +136,11 @@ public void gameRunning(float runTime) {
 
 public void moveCamera() {
 	Vector2 cameraD = this.inputHandler.getCameraDelta();
+	float zoom = this.inputHandler.getZoom();
 	cam.translate(cameraD.x, cameraD.y);
+	if (cam.zoom + zoom > 0.1) {
+		cam.zoom += zoom;
+	}
 	cam.update();
 }
 

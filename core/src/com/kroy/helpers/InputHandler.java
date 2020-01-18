@@ -15,10 +15,12 @@ public class InputHandler implements InputProcessor {
 	private int mouseX;
 	private int mouseY;
 	private Vector2 cameraVel;
+	private float zoom;
 	
 	public InputHandler(GameWorld myWorld) {
 		this.myWorld = myWorld;
 		cameraVel = new Vector2(0, 0);
+		zoom = 0;
 	}
 	
 	@Override
@@ -102,8 +104,15 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
+		float zoomSpeed = 0.2f;
+		zoom += amount * zoomSpeed;
 		return false;
+	}
+	
+	public float getZoom() {
+		float zoomChange = zoom;
+		zoom = 0;
+		return zoomChange;
 	}
 
 }
