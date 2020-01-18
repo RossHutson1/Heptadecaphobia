@@ -2,6 +2,8 @@ package com.kroy.gameobjects;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 //Possibly still need to implement more methods here
 //such as a method to add water?
 
@@ -13,7 +15,8 @@ public class Fortress extends GameObject{
 	int pumpSpeed; // Speed at which water is drained from fortress
 	//Weapon weapon; // Used for the fortress to shoot at the fireTrucks
 	
-	public Fortress(int waterCapacityInitial) {
+	public Fortress(int waterCapacityInitial, Vector2 position) {
+		this.position =position;
 		this.waterCapacity = waterCapacityInitial; 
 		this.waterLevel = 0;
 		this.level = 1;

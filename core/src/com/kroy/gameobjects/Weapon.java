@@ -8,7 +8,7 @@ public class Weapon {
 
 	private int damage, firerate, range;
 	private boolean animate;
-	private ArrayList<Integer> position = new ArrayList<Integer>();
+	private Vector2 position = new Vector2();
 	private int numProjectiles;
 	//private image texture;//change type
 	
@@ -23,7 +23,7 @@ public class Weapon {
 	}
 	public void fire(Vector2 fortPosition) {
 		this.numProjectiles -=1;
-		Projectile projectile = new Projectile()
+		Projectile projectile = new Projectile(1,1,fortPosition,this.position);
 	}
 	public int getDamage() {
 		return this.damage;

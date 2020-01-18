@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.math.Vector2;
 import com.kroy.gameobjects.FireStation;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameobjects.Fortress;
@@ -29,7 +30,7 @@ public class GameTest {
 		KroyGame game = new KroyGame();
 		ArrayList<Object> emptyList = new ArrayList<Object>();
 		ArrayList<Object> nonemptyList = new ArrayList<Object>();
-		Fortress fort = new Fortress(0);
+		Fortress fort = new Fortress(10,new Vector2(1,1));
 		nonemptyList.add(fort);
 		assertTrue(game.isWon(emptyList));
 		assertFalse(game.isWon(nonemptyList));
@@ -61,7 +62,7 @@ public class GameTest {
 	}
 	@Test
 	public void testFortressHealth() {
-		Fortress fort = new Fortress(1);
+		Fortress fort = new Fortress(10,new Vector2(1,1));
 		assertEquals(fort.getHpCurrent(),10);
 		fort.damage();
 		assertEquals(fort.getHpCurrent(),9);
@@ -70,18 +71,18 @@ public class GameTest {
 	@Test
 	public void testEngineStartNum() {
 		KroyGame game = new KroyGame();
-		assertEquals(2,2);
+		assertEquals(game.getTruckList().size(),2);
 	}
 	@Test
 	public void testFortressStartNum() {
 		KroyGame game = new KroyGame();
-		assertEquals(4,4);
+		assertEquals(game.getFortList().size(),3);
 	}
 	@Test
 	public void testRefills() {
 		Firetruck truck = new Firetruck(1,1,1,1);
 		assertEquals(truck.getHpCurrent(),10);
-		truck.fireWeapon();
+		truck.fireWeapon(new Vector2(1,1));
 		assertEquals(truck.getHpCurrent(),9);
 		
 	}
@@ -102,14 +103,14 @@ public class GameTest {
 	}
 	@Test
 	public void testFortressDestroyed() {
-		Fortress fort = new Fortress(1);
+		Fortress fort = new Fortress(10,new Vector2(1,1));
 		assertEquals(fort.getHpCurrent(),10);
 		fort.damage();
 		assertEquals(fort.getHpCurrent(),9);
 	}
 	@Test
 	public void testFort() {
-		Fortress fort = new Fortress(1);
+		Fortress fort = new Fortress(10,new Vector2(1,1));
 		assertEquals(fort.getHpCurrent(),10);
 		fort.damage();
 		assertEquals(fort.getHpCurrent(),9);

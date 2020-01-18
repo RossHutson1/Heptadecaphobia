@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameobjects.Fortress;
 import com.kroy.gameobjects.GameObject;
@@ -22,13 +23,21 @@ public class KroyGame extends Game {
 	ArrayList<Object> patrolList = new ArrayList<Object>();/*/
 	ArrayList<Firetruck> truckList = new ArrayList<Firetruck>();
 	ArrayList<Fortress> fortressList = new ArrayList<Fortress>();
+	
+	public KroyGame() {
+		for (int x=0; x<=1; x+=1) {
+			truckList.add(generateFireTruck());
+		}
+		generateFortress(new Vector2(37,2));
+		generateFortress(new Vector2(30,34));
+		generateFortress(new Vector2(6,7));
+		
+	}
 	@Override
 	public void create() {
 		Gdx.app.log("Game", "created");
 		AssetLoader.load();
 		setScreen(new GameScreen());
-		
-		
 	}
 	
 	@Override
@@ -51,6 +60,9 @@ public class KroyGame extends Game {
 	}
 	public ArrayList<Firetruck> getTruckList() {
 		return this.truckList;
+	}
+	public ArrayList<Fortress> getFortList() {
+		return this.fortressList;
 	}
 	public static boolean isLost(ArrayList<Object> firetruckList) {
 		
@@ -83,8 +95,8 @@ public class KroyGame extends Game {
 		//return newPatrol;
 	//}
 	
-	public static Fortress generateFortress() {
-		Fortress newFortress = new Fortress(0);
+	public static Fortress generateFortress(Vector2 position) {
+		Fortress newFortress = new Fortress(10,position);
 		return newFortress;
 	}
 	
