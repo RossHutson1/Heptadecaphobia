@@ -2,19 +2,22 @@ package com.kroy.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.kroy.gameworld.MapGrid;
 
 public class Firetruck extends GameObject{
 
     private Vector2 position;
+    private Vector2 initPos;
     private Vector2 velocity;
 
     private float rotation;
     private int width;
     private int height;
-    private int goalX;
-    private int goalY;
     private int offsetX;
     private int offsetY;
+    private int goalX;
+    private int goalY;
+    public MapGrid mGrid;
     
     private boolean startMove;
     private boolean notDestroyed;
@@ -23,13 +26,76 @@ public class Firetruck extends GameObject{
     public Firetruck(int x, int y, int width, int height) {
         this.width = width;
         this.height = height;
-        this.position = new Vector2(45, 45);
+        this.position = new Vector2((x * 45) + (int)45/2, (int)45/2 + (y*45));
+        this.initPos = this.position;
         this.velocity = new Vector2(0, 0);
+        goalX = (int)position.x;
+        goalY = (int)position.y;
         this.startMove = false;
         this.notDestroyed = false;
+        this.mGrid = new MapGrid();
+        
     }
 
     public void update(float delta) {
+    	if (this.getX()<goalX && this.velocity.y == 0) {
+    		if((mGrid.getCellValue((int)(this.getY()/45), (int)(this.getX()/45)+1) == 1)) {
+    		this.velocity.x = 5;
+    		this.velocity.y = 0;
+    		this.position.add(this.velocity);
+    		} else {
+    			this.position.x = this.getX() - (this.getX()%45) + 45/2;
+    			this.velocity.x = 0;
+    		}
+    		if(this.getX()>=goalX) {
+    			this.position.x=goalX;
+        		this.velocity.x = 0;
+    		}
+    	} else if (this.getX()>goalX && this.velocity.y == 0) {
+    	if(this.getX()%45 > 45/2 || (mGrid.getCellValue((int)(this.getY()/45), (int)(this.getX()/45)-1) == 1)) {
+        this.velocity.x = -5;
+		this.velocity.y = 0;
+		this.position.add(this.velocity);
+    	} else {
+			this.position.x = this.getX() - (this.getX()%45) + 45/2;
+			this.velocity.x = 0;    		
+    	}
+		if(this.getX()<=goalX) {
+			this.position.x=goalX;
+    		this.velocity.x = 0;
+			}
+    	}
+    	if (this.getY()>goalY && this.velocity.x == 0) {
+    		if((mGrid.getCellValue((int)(this.getY()/45)-1, (int)(this.getX()/45)) == 1)) {
+            this.velocity.x = 0;
+    		this.velocity.y = -5;
+    		this.position.add(this.velocity);
+    		} else {
+    			this.position.y = this.getY() - (this.getY()%45) + 45/2;
+    			this.velocity.y = 0;    		    			
+    		}
+    		if(this.getY()<=goalY) {
+    			this.position.y=goalY;
+        		this.velocity.y = 0;
+    			}
+    	} else if (this.getY()<goalY && this.velocity.x == 0) {
+    		if((mGrid.getCellValue((int)(this.getY()/45)+1, (int)(this.getX()/45)) == 1)) {
+            this.velocity.x = 0;
+    		this.velocity.y = 5;
+    		this.position.add(this.velocity);
+    		} else {
+    			this.position.y = this.getY() - (this.getY()%45) + 45/2;
+    			this.velocity.y = 0;    		    			    			
+    		}
+    		if(this.getY()>=goalY) {
+    			this.position.y=goalY;
+        		this.velocity.y = 0;
+    			}
+    		}
+    }
+    	
+    	
+    	/*/
 		if (this.position.x%45!=0 || this.position.y%45 != 0 || this.startMove) {
 			this.position.add(this.velocity);
 		} else {
@@ -37,7 +103,7 @@ public class Firetruck extends GameObject{
 			this.velocity.y = 0;
 		}
 		this.startMove = false;
-    }
+		/*/
     
     public void moveX(boolean moving, boolean right) {
     	if (moving) {
@@ -78,8 +144,6 @@ public class Firetruck extends GameObject{
     }
 
     public void onClick(int mouseX, int mouseY) {
-    	this.goalX = mouseX;
-    	this.goalY = mouseY;
     	this.startMove = true;
     }
 
@@ -121,12 +185,18 @@ public class Firetruck extends GameObject{
     	return this.offsetY;
     }
     
+    public void setGoal(int x, int y) {
+    	this.goalX = x;
+    	this.goalY = y;
+    }
+    
     public void onRestart() {
     	this.rotation = 0;
-    	this.position.y = 45;
-    	this.position.x = 45;
+    	this.position= this.initPos;
     	this.velocity.y = 0;
     	this.velocity.x = 0;
+        goalX = (int)position.x;
+        goalY = (int)position.y;
     	this.notDestroyed = false;
     }
     public void refill() {

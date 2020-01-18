@@ -2,8 +2,11 @@ package com.kroy.gameworld;
 
 import com.kroy.helpers.InputHandler;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.kroy.gameobjects.Firetruck; import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameRenderer {
@@ -13,22 +16,22 @@ private OrthographicCamera cam;
 private ShapeRenderer shapeRenderer;
 private InputHandler inputHandler;
 private SpriteBatch batcher;
+private MapGrid mGrid;
 
-private Firetruck truck;
+private ArrayList<Firetruck> trucks;
 private Animation truckAnimation;
 private TextureRegion truckStraight, truckStraight1;
 
 private Texture backgroundTexture, minsterTexture;
 private Sprite background;
 
-
 public GameRenderer(GameWorld world) {
     myWorld = world;
-    InputHandler inputHandler = new InputHandler(myWorld);
+    world.setRenderer(this);
+    this.inputHandler = new InputHandler(myWorld);
     
     float w = Gdx.graphics.getWidth();
     float h = Gdx.graphics.getHeight();
-    
     
     cam = new OrthographicCamera(1000, 1000*(h/w));
     cam.setToOrtho(true, w, h);
@@ -43,10 +46,16 @@ public GameRenderer(GameWorld world) {
     initGameObjects();
     initAssets();
     
+    mGrid = new MapGrid();
+    
 }
 
 private void initGameObjects() {
-    truck = myWorld.getFiretruck();
+    trucks = myWorld.getFiretrucks();
+}
+
+public InputHandler getInputHandler() {
+	return this.inputHandler;
 }
 
 private void initAssets() {
@@ -59,7 +68,7 @@ private void initAssets() {
     backgroundTexture = AssetLoader.map;
     background = new Sprite(backgroundTexture);
     background.flip(false,  true);
-    background.setScale(0.945f);
+//    background.setScale(0.945f);
 }
 
 public void render(float runTime) {
@@ -115,19 +124,30 @@ public void gameOver() {
 }
 
 public void gameRunning(float runTime) {
-	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX(),
-    		truck.getY()+20, 36f,
+	for (int i = 0; i < trucks.size(); i++) {
+		Firetruck truck = trucks.get(i);
+	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX()-(truck.getWidth()/2),
+    		truck.getY()-(truck.getHeight()/2), 36f,
     		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
 	batcher.draw(minsterTexture, 1665, 90);
+	}
 }
 
 public void moveCamera() {
-	System.out.println(cam.position);
-	Vector2 truckVelocity = truck.getVelocity();
-	cam.translate(truckVelocity.x, truckVelocity.y);
-	System.out.println(cam.position.x);
-	System.out.println();
+	Vector2 cameraD = this.inputHandler.getCameraDelta();
+	cam.translate(cameraD.x, cameraD.y);
 	cam.update();
 }
+
+public Vector3 getCameraPos() {
+	return  new Vector3(cam.position);
+}
+
+public Vector2 getOffset() {
+	Vector2 temp = new Vector2(0,0);
+	temp.add(cam.viewportWidth / 2f, cam.viewportHeight / 2f);
+	return temp;
+}
+
 }

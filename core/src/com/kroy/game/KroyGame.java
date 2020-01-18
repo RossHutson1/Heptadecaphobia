@@ -58,12 +58,12 @@ public class KroyGame extends Game {
 		}
 		
 	}
+	/*/
 	public void objectHit(GameObject object, Projectile projectile) {
 		if (projectile.getPosition() == object.getPosition()) {
 			object.damage();
 		}
 	}
-	/*/
 	public static FireTruck generateFireTruck() {
 		FireTruck newTruck = new FireTruck(0, 0);
 		return newTruck;
