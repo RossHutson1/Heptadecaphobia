@@ -109,10 +109,13 @@ public class GameTest {
 		assertEquals(fort.getHpCurrent(),9);
 	}
 	@Test
-	public void testFort() {
-		Fortress fort = new Fortress(10,new Vector2(1,1));
-		assertEquals(fort.getHpCurrent(),10);
-		fort.damage();
-		assertEquals(fort.getHpCurrent(),9);
+	public void testEngineMoves() {
+		Firetruck truck = new Firetruck(1,1,1,1);
+		
+	}
+	@Test
+	public void testEngineFires() {
+		Firetruck truck = new Firetruck(1,1,1,1);
+		
 	}
 }
