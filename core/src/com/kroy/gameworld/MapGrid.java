@@ -1,7 +1,5 @@
 package com.kroy.gameworld;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
