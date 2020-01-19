@@ -97,55 +97,6 @@ public class Firetruck extends GameObject{
     		}
     	this.firehose.update(delta);
     }
-    	
-    	
-    	/*/
-		if (this.position.x%45!=0 || this.position.y%45 != 0 || this.startMove) {
-			this.position.add(this.velocity);
-		} else {
-			this.velocity.x = 0;
-			this.velocity.y = 0;
-		}
-		this.startMove = false;
-		/*/
-    
-    public void moveX(boolean moving, boolean right) {
-    	if (moving) {
-    		if (right) {
-        		this.velocity.x = 5;
-        		this.rotation = 90;
-        	} else {
-        		this.velocity.x = -5;
-        		this.rotation = 270;
-        	}
-    	} else {
-    		this.velocity.x = 0;
-    	}
-    	if (this.position.x%45!=0 || moving) {
-    		this.position.add(this.velocity);
-    		moving = false;
-    		this.startMove = false;
-    	}
-    }
-    
-    public void moveY(boolean moving, boolean up) {
-    	if (moving) {
-    		if (up) {
-    			this.velocity.y = -5;
-        		this.rotation = 0;
-        	} else {
-        		this.velocity.y = 5;
-        		this.rotation = 180;
-        	}
-    	} else {
-    		this.velocity.y = 0;
-    	}
-    	if (this.position.y%45!=0 || moving) {
-    		this.position.add(this.velocity);
-    		moving = false;
-    		this.startMove = false;
-    	}
-    }
 
     public void onClick(int mouseX, int mouseY) {
     	this.startMove = true;
@@ -184,12 +135,10 @@ public class Firetruck extends GameObject{
     }
     
     public int getOffsetX() {
-    	
     	return this.offsetX;
     }
     
     public int getOffsetY() {
-    	
     	return this.offsetY;
     }
     
@@ -207,6 +156,7 @@ public class Firetruck extends GameObject{
         goalY = (int)position.y;
     	this.notDestroyed = false;
     }
+    
     public void refill() {
     	this.firehose.setNumProjectiles(10);
     }

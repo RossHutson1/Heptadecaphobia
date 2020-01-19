@@ -24,6 +24,10 @@ public class MapGrid {
 		return grid[row][col];
 	}
 	
+	public void setCellValue(int row, int col, int value) {
+		grid[row][col] = value;
+	}
+	
 	public boolean isRoad(int row, int col) {
 		if (grid[row][col] == 1) {
 			return true;

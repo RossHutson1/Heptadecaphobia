@@ -3,6 +3,7 @@ package com.kroy.gameworld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.kroy.gameobjects.FireStation;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameobjects.Fortress;
 import com.kroy.gameobjects.GameObject;
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 
 public class GameWorld {
     private Firetruck selectedTruck;
+    private FireStation fStation;
     private ArrayList<Firetruck> truckList;
     private ArrayList<Fortress> fortressList;
-    private GameState currentState;
+    private GameState currentState; 
     private GameRenderer renderer;
     public MapGrid map;
     
@@ -35,6 +37,7 @@ public class GameWorld {
     	this.fortressList.add(generateFortress(new Vector2(37*45,2*45)));
     	this.fortressList.add(generateFortress(new Vector2(30*45,34*45)));
     	this.fortressList.add(generateFortress(new Vector2(6*45,7*45)));
+    	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
     }
 
     public void update(float delta) {
@@ -54,11 +57,11 @@ public class GameWorld {
     		truckList.get(i).update(delta);
     		truckFiresAtFortress();
     	}
+    	fStation.update(delta);
 	}
 
 	private void updateReady(float delta) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public ArrayList<Firetruck> getFiretrucks() {
@@ -97,7 +100,6 @@ public class GameWorld {
     	for (int i = 0; i < truckList.size(); i++){
     		truckList.get(i).onRestart();
     	}
-
     }
 
     public boolean isGameOver() {
