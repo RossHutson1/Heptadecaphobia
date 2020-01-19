@@ -118,4 +118,5 @@ public class GameTest {
 		Firetruck truck = new Firetruck(1,1,1,1);
 		
 	}
+	
 }
