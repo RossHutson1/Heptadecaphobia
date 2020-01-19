@@ -6,7 +6,6 @@ import com.kroy.gameworld.MapGrid;
 
 public class Firetruck extends GameObject{
 
-    private Vector2 position;
     private Vector2 initPos;
     private Vector2 velocity;
 
@@ -34,42 +33,45 @@ public class Firetruck extends GameObject{
         this.startMove = false;
         this.notDestroyed = false;
         this.mGrid = new MapGrid();
-        
+        this.rotation = 0f;
     }
 
     public void update(float delta) {
     	if (this.getX()<goalX && this.velocity.y == 0) {
     		if((mGrid.getCellValue((int)(this.getY()/45), (int)(this.getX()/45)+1) == 1)) {
-    		this.velocity.x = 5;
-    		this.velocity.y = 0;
-    		this.position.add(this.velocity);
+	    		this.velocity.x = 5;
+	    		this.velocity.y = 0;
+	    		this.rotation = 90f;
+	    		this.position.add(this.velocity);
     		} else {
     			this.position.x = this.getX() - (this.getX()%45) + 45/2;
     			this.velocity.x = 0;
-    		}
-    		if(this.getX()>=goalX) {
-    			this.position.x=goalX;
-        		this.velocity.x = 0;
-    		}
+	    	}
+			if(this.getX()>=goalX) {
+				this.position.x=goalX;
+	    		this.velocity.x = 0;
+			}
     	} else if (this.getX()>goalX && this.velocity.y == 0) {
-    	if(this.getX()%45 > 45/2 || (mGrid.getCellValue((int)(this.getY()/45), (int)(this.getX()/45)-1) == 1)) {
-        this.velocity.x = -5;
-		this.velocity.y = 0;
-		this.position.add(this.velocity);
-    	} else {
-			this.position.x = this.getX() - (this.getX()%45) + 45/2;
-			this.velocity.x = 0;    		
-    	}
-		if(this.getX()<=goalX) {
-			this.position.x=goalX;
-    		this.velocity.x = 0;
+	    	if(this.getX()%45 > 45/2 || (mGrid.getCellValue((int)(this.getY()/45), (int)(this.getX()/45)-1) == 1)) {
+		        this.velocity.x = -5;
+				this.velocity.y = 0;
+				this.rotation = 270f;
+				this.position.add(this.velocity);
+	    	} else {
+				this.position.x = this.getX() - (this.getX()%45) + 45/2;
+				this.velocity.x = 0;    		
+	    	}
+			if(this.getX()<=goalX) {
+				this.position.x=goalX;
+	    		this.velocity.x = 0;
 			}
     	}
     	if (this.getY()>goalY && this.velocity.x == 0) {
     		if((mGrid.getCellValue((int)(this.getY()/45)-1, (int)(this.getX()/45)) == 1)) {
-            this.velocity.x = 0;
-    		this.velocity.y = -5;
-    		this.position.add(this.velocity);
+	            this.velocity.x = 0;
+	    		this.velocity.y = -5;
+	    		this.rotation = 0f;
+	    		this.position.add(this.velocity);
     		} else {
     			this.position.y = this.getY() - (this.getY()%45) + 45/2;
     			this.velocity.y = 0;    		    			
@@ -80,9 +82,10 @@ public class Firetruck extends GameObject{
     			}
     	} else if (this.getY()<goalY && this.velocity.x == 0) {
     		if((mGrid.getCellValue((int)(this.getY()/45)+1, (int)(this.getX()/45)) == 1)) {
-            this.velocity.x = 0;
-    		this.velocity.y = 5;
-    		this.position.add(this.velocity);
+	            this.velocity.x = 0;
+	    		this.velocity.y = 5;
+	    		this.rotation = 180f;
+	    		this.position.add(this.velocity);
     		} else {
     			this.position.y = this.getY() - (this.getY()%45) + 45/2;
     			this.velocity.y = 0;    		    			    			
@@ -92,6 +95,7 @@ public class Firetruck extends GameObject{
         		this.velocity.y = 0;
     			}
     		}
+    	this.firehose.update(delta);
     }
     	
     	
@@ -167,6 +171,10 @@ public class Firetruck extends GameObject{
         return this.rotation;
     }
     
+    public Weapon getWeapon() {
+    	return this.firehose;
+    }
+    
     public boolean notDestroyed() {
     	return this.notDestroyed;
     }
@@ -207,8 +215,9 @@ public class Firetruck extends GameObject{
     	this.hpCurrent = this.hpMax;
     }
     
-    public void fireWeapon() {
-    	this.firehose.fire();
+    public void fireWeapon(Vector2 fortPosition) {
+    	Gdx.app.log("Firetruck", "Fire");
+    	this.firehose.fire(fortPosition, this.position);
     }
 
 }

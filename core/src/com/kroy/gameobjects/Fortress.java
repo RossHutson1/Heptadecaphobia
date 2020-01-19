@@ -1,4 +1,10 @@
 package com.kroy.gameobjects;
+
+import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+
 //Possibly still need to implement more methods here
 //such as a method to add water?
 
@@ -10,7 +16,8 @@ public class Fortress extends GameObject{
 	int pumpSpeed; // Speed at which water is drained from fortress
 	//Weapon weapon; // Used for the fortress to shoot at the fireTrucks
 	
-	public Fortress(int waterCapacityInitial) {
+	public Fortress(int waterCapacityInitial, Vector2 position) {
+		this.position = position;
 		this.waterCapacity = waterCapacityInitial; 
 		this.waterLevel = 0;
 		this.level = 1;
@@ -20,9 +27,22 @@ public class Fortress extends GameObject{
 	
 	private void Fire(GameObject target) {
 		
-	};
+	}
 	
 	private void levelUp() {
 		
-	};
+	}
+	
+	public void findTrucks(ArrayList<Firetruck> trucklist) {
+		for (double x=  this.position.x-2*45; x<=this.position.x+2*45; x+=1) {
+			for (double y=  this.position.y-2*45; y<=this.position.y+2*45; y+=1) {
+				for (Firetruck truck : trucklist) {
+					if (x == (truck.getX()) && y == (truck.getY())) {
+						truck.fireWeapon(this.position);
+						Gdx.app.log("Fort-FindTrucks", "DETECTED FORTRESS" + this.position);
+					}
+				}
+			}
+		}
+	}
 }

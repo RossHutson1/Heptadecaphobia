@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.kroy.gameobjects.Firetruck; import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.kroy.gameobjects.Firetruck;
+import com.kroy.gameobjects.Projectile;
+import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameRenderer {
 
@@ -84,7 +86,7 @@ public void render(float runTime) {
 
         // Draw Background colour
         shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-        shapeRenderer.rect(0, 0, 500, Gdx.graphics.getHeight());
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         shapeRenderer.end();
     } else {
@@ -108,14 +110,11 @@ public void render(float runTime) {
     
     // End SpriteBatch
     batcher.end();
-    
-    
-
 }
 
 public void startMenu() {
-	AssetLoader.shadow.draw(batcher, "Click to Start", 50, 100);
-    AssetLoader.font.draw(batcher, "Click to Start", 50, 100);
+	AssetLoader.shadow.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
+    AssetLoader.font.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
 }
 
 public void gameOver() {
@@ -126,10 +125,20 @@ public void gameOver() {
 public void gameRunning(float runTime) {
 	for (int i = 0; i < trucks.size(); i++) {
 		Firetruck truck = trucks.get(i);
-	batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX()-(truck.getWidth()/2),
+		Gdx.app.log("truck", truck.getPosition().toString());
+		batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX()-(truck.getWidth()/2),
     		truck.getY()-(truck.getHeight()/2), 36f,
     		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
+		
+		ArrayList<Projectile> projectileList = truck.getWeapon().getProjectiles();
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(47 / 255.0f, 221 / 255.0f, 237 / 255.0f, 1);
+		for (Projectile projectile: projectileList) {
+			shapeRenderer.circle(projectile.getPosition().x, projectile.getPosition().y, 3f);
+			Gdx.app.log("Render Ball", projectile.getPosition().x + " " + projectile.getPosition().y);
+		}
+		shapeRenderer.end();
 	batcher.draw(minsterTexture, 1665, 90);
 	}
 }

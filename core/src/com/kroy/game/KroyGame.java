@@ -12,15 +12,6 @@ import com.kroy.screens.GameScreen;
 public class KroyGame extends Game {
 	
 	int test = 3;
-	/*/int state;
-	Screen screen = new Screen();
-	EventListener eventListener = new EventListener();
-	Map map = new Map();
-	FireStation fireStation = new FireStation(0, 0, 0);
-	ArrayList<Object> patrolList = new ArrayList<Object>();
-	ArrayList<Object> truckList = new ArrayList<Object>();
-	
-	/*/
 	ArrayList<Object> fortressList = new ArrayList<Object>();
 	@Override
 	public void create() {
