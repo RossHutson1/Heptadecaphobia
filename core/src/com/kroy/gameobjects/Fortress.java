@@ -33,16 +33,16 @@ public class Fortress extends GameObject{
 		
 	}
 	
-	public void findTrucks(ArrayList<Firetruck> trucklist) {
+	public int findTrucks(ArrayList<Firetruck> trucklist, int weaponCount) {
 		for (double x=  this.position.x-2*45; x<=this.position.x+2*45; x+=1) {
 			for (double y=  this.position.y-2*45; y<=this.position.y+2*45; y+=1) {
 				for (Firetruck truck : trucklist) {
 					if (x == (truck.getX()) && y == (truck.getY())) {
-						truck.fireWeapon(this.position);
-						Gdx.app.log("Fort-FindTrucks", "DETECTED FORTRESS" + this.position);
+						weaponCount = truck.fireWeapon(this.position, weaponCount);
 					}
 				}
 			}
 		}
+		return weaponCount;
 	}
 }

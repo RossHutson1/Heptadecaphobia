@@ -8,6 +8,7 @@ public class Node {
 	private int depth, x, y, targetX, targetY;
 	private MapGrid map;
 	private Node[] neighbours = new Node[4];
+	ArrayList<Node> path;
 	
 	//when calling make sure it is a place on the road and 
 	
@@ -68,12 +69,21 @@ public class Node {
 	}
 	
 	public ArrayList<Node> getBestPath() {
-		int bestDepth;
-		for (Node node : neighbours) {
-			
+		int bestDepth = 999;
+		Node bestNode = null;
+		if (this.targetNode) {
+			return this.path;
+		} else if (!(this.hasNeighbours[0]) && !(this.hasNeighbours[1]) && !(this.hasNeighbours[2]) && !(this.hasNeighbours[3])) {
+			return null;
 		}
-		
-		return null;
+		else {
+			for (Node node : neighbours) {
+				if (node.getBestPath().size() < bestDepth && node.getBestPath() != null) {
+					bestNode = node;
+				}
+			}
+			return bestNode.getBestPath();
+		}
 	}
 	
 	private boolean[] getNeighbours(int x, int y) {

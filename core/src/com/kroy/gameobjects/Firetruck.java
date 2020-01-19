@@ -18,7 +18,6 @@ public class Firetruck extends GameObject{
     private int goalY;
     public MapGrid mGrid;
     
-    private boolean startMove;
     private boolean notDestroyed;
     private Weapon firehose= new Weapon(1,3,10);
 
@@ -30,7 +29,6 @@ public class Firetruck extends GameObject{
         this.velocity = new Vector2(0, 0);
         goalX = (int)position.x;
         goalY = (int)position.y;
-        this.startMove = false;
         this.notDestroyed = false;
         this.mGrid = new MapGrid();
         this.rotation = 0f;
@@ -99,7 +97,7 @@ public class Firetruck extends GameObject{
     }
 
     public void onClick(int mouseX, int mouseY) {
-    	this.startMove = true;
+    	
     }
 
     public float getX() {
@@ -165,9 +163,9 @@ public class Firetruck extends GameObject{
     	this.hpCurrent = this.hpMax;
     }
     
-    public void fireWeapon(Vector2 fortPosition) {
-    	Gdx.app.log("Firetruck", "Fire");
-    	this.firehose.fire(fortPosition, this.position);
+    public int fireWeapon(Vector2 fortPosition, int weaponCount) {
+    	weaponCount = this.firehose.fire(fortPosition, this.position, weaponCount);
+    	return weaponCount;
     }
 
 }

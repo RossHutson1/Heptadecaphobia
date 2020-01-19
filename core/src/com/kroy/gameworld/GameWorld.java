@@ -18,6 +18,7 @@ public class GameWorld {
     private GameState currentState; 
     private GameRenderer renderer;
     public MapGrid map;
+    private int weaponCount;
     
     public enum GameState {
 
@@ -38,6 +39,7 @@ public class GameWorld {
     	this.fortressList.add(generateFortress(new Vector2(30*45,34*45)));
     	this.fortressList.add(generateFortress(new Vector2(6*45,7*45)));
     	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
+    	weaponCount = 20;
     }
 
     public void update(float delta) {
@@ -53,9 +55,16 @@ public class GameWorld {
     }
 
     private void updateRunning(float delta) {
+    	if (weaponCount > 0) {
+    		weaponCount -= 1;
+    	} else {
+    		weaponCount = 0;
+    	}
     	for (int i = 0; i < truckList.size(); i++){
     		truckList.get(i).update(delta);
-    		truckFiresAtFortress();
+    		for(Fortress fort: this.fortressList) {
+    			weaponCount = fort.findTrucks(this.truckList, weaponCount);
+    		}
     	}
     	fStation.update(delta);
 	}
@@ -70,12 +79,6 @@ public class GameWorld {
 	
 	public ArrayList<Fortress> getFortList() {
 		return fortressList;
-	}
-	
-	public void truckFiresAtFortress() {
-		for(Fortress fort: fortressList) {
-			fort.findTrucks(this.truckList);
-		}
 	}
 	
 	public static Fortress generateFortress(Vector2 position) {

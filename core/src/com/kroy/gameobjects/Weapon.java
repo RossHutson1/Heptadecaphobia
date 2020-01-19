@@ -22,11 +22,15 @@ public class Weapon {
 		this.numProjectiles = numProjectiles;
 		//this.texture = texture;
 	}
-	public void fire(Vector2 fortPosition, Vector2 truckPosition) {
-		if (this.numProjectiles > 0) {
-			this.numProjectiles -=1;
-			projectileList.add(new Projectile(this.damage,1,fortPosition,truckPosition));
+	public int fire(Vector2 fortPosition, Vector2 truckPosition, int weaponCount) {
+		if (weaponCount == 0) {
+			if (this.numProjectiles > 0) {
+				this.numProjectiles -=1;
+				projectileList.add(new Projectile(this.damage,5,fortPosition,truckPosition));
+			}
+			weaponCount = 20;
 		}
+		return weaponCount;
 	}
 	public int getDamage() {
 		return this.damage;

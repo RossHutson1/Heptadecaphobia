@@ -4,7 +4,9 @@ import com.kroy.helpers.InputHandler;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.kroy.gameobjects.Firetruck;
@@ -27,6 +29,8 @@ private TextureRegion truckStraight, truckStraight1;
 private Texture backgroundTexture, minsterTexture;
 private Sprite background;
 
+private FPSLogger fps;
+
 public GameRenderer(GameWorld world) {
     myWorld = world;
     world.setRenderer(this);
@@ -44,6 +48,8 @@ public GameRenderer(GameWorld world) {
     
     shapeRenderer = new ShapeRenderer();
     shapeRenderer.setProjectionMatrix(cam.combined);
+    
+    fps = new FPSLogger();
     
     initGameObjects();
     initAssets();
@@ -107,7 +113,7 @@ public void render(float runTime) {
     	gameRunning(runTime);
     	moveCamera();
     }
-    
+    fps.log();
     // End SpriteBatch
     batcher.end();
 }
@@ -125,7 +131,6 @@ public void gameOver() {
 public void gameRunning(float runTime) {
 	for (int i = 0; i < trucks.size(); i++) {
 		Firetruck truck = trucks.get(i);
-		Gdx.app.log("truck", truck.getPosition().toString());
 		batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX()-(truck.getWidth()/2),
     		truck.getY()-(truck.getHeight()/2), 36f,
     		52.5f, truck.getWidth(), truck.getHeight(),
@@ -136,7 +141,6 @@ public void gameRunning(float runTime) {
 		shapeRenderer.setColor(47 / 255.0f, 221 / 255.0f, 237 / 255.0f, 1);
 		for (Projectile projectile: projectileList) {
 			shapeRenderer.circle(projectile.getPosition().x, projectile.getPosition().y, 3f);
-			Gdx.app.log("Render Ball", projectile.getPosition().x + " " + projectile.getPosition().y);
 		}
 		shapeRenderer.end();
 	batcher.draw(minsterTexture, 1665, 90);
