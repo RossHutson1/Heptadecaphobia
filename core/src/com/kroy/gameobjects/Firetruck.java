@@ -92,6 +92,7 @@ public class Firetruck extends GameObject{
         		this.velocity.y = 0;
     			}
     		}
+    	firehose.update(delta);
     }
     	
     	
@@ -161,6 +162,10 @@ public class Firetruck extends GameObject{
 
     public float getRotation() {
         return this.rotation;
+    }
+    
+    public Weapon getWeapon() {
+    	return this.firehose;
     }
     
     public boolean notDestroyed() {

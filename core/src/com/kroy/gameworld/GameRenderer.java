@@ -4,10 +4,15 @@ import com.kroy.helpers.InputHandler;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx; import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20; import com.badlogic.gdx.graphics.OrthographicCamera; import com.badlogic.gdx.graphics.Texture; import com.badlogic.gdx.graphics.g2d.SpriteBatch; import com.badlogic.gdx.graphics.g2d.TextureRegion; import com.badlogic.gdx.graphics.glutils.ShapeRenderer; import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.kroy.gameobjects.Firetruck; import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.kroy.gameobjects.Firetruck;
+import com.kroy.gameobjects.Fortress;
+import com.kroy.gameobjects.Projectile;
+import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameRenderer {
 
@@ -131,6 +136,14 @@ public void gameRunning(float runTime) {
     		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
 		batcher.draw(minsterTexture, 1665, 90);
+		
+		ArrayList<Projectile> projectileList = truck.getWeapon().getProjectiles();
+		shapeRenderer.setColor(Color.BLUE);
+		shapeRenderer.begin(ShapeType.Filled);
+		for (Projectile projectile: projectileList) {
+			shapeRenderer.circle(projectile.getPosition().x, projectile.getPosition().y, 3f);
+		}
+		shapeRenderer.end();
 	}
 }
 
