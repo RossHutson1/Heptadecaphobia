@@ -149,8 +149,13 @@ public void gameRunning(float runTime) {
 			shapeRenderer.circle(projectile.getPosition().x,
 					projectile.getPosition().y, 5f);
 		}
+		ArrayList<Projectile> fortProjectileList = truck.getWeapon().getFortProjectiles();
 		shapeRenderer.setColor(52 / 255.0f, 237 / 255.0f, 71 / 255.0f, 1);
-		shapeRenderer.rect(truck.getX() - 25, truck.getY() - 45, truck.getHealth() * 5, 10);
+		for (Projectile fortProjectile: fortProjectileList) {
+			shapeRenderer.circle(fortProjectile.getPosition().x,
+					fortProjectile.getPosition().y, 5f);
+		}
+		shapeRenderer.rect(truck.getX() - 25, truck.getY() - 45, truck.getHpCurrent() * 5, 10);
 		shapeRenderer.end();
 	batcher.begin();
 	batcher.draw(minsterTexture, 1620, 45);
@@ -169,7 +174,7 @@ public void moveCamera() {
 }
 
 public Vector3 getCameraPos() {
-	return  new Vector3(cam.position);
+	return new Vector3(cam.position);
 }
 
 public Vector2 getOffset() {

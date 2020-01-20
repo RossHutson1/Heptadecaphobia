@@ -25,16 +25,19 @@ public class Weapon {
 	}
 	public int fire(Vector2 fortPosition, Vector2 truckPosition, int weaponCount,
 			ArrayList<Fortress> fortressList, Firetruck truck) {
+		Gdx.app.log("WEAPON COUNT", "" + weaponCount);
 		if (weaponCount%20 == 0) {
 			if (this.numProjectiles > 0) {
 				this.numProjectiles -=1;
 				projectileList.add(new Projectile(this.damage,5,new Vector2(fortPosition),
-						new Vector2(truckPosition), fortressList));
+						new Vector2(truckPosition), fortressList, truck, true));
 			}
 		}
 		if (weaponCount == 0) {
-			fortProjectileList.add(new Projectile(this.damage,5,new Vector2(truck.getPosition()), new Vector2(fortPosition), fortressList));
-			weaponCount = 40;
+			fortProjectileList.add(new Projectile(this.damage,5,new Vector2(truck.getPosition()),
+					new Vector2(fortPosition), fortressList, truck, false));
+			Gdx.app.log("FORT-PROJECTILE", "FIRE");
+			weaponCount = 61;
 		}
 		return weaponCount;
 	}
@@ -62,6 +65,14 @@ public class Weapon {
 			}
 		}
 		projectileList.removeAll(toRemove);
+		ArrayList<Projectile> fortToRemove = new ArrayList<Projectile>();
+		for(Projectile fortProjectile: this.fortProjectileList) {
+			fortProjectile.update(delta);
+			if (fortProjectile.remove) {
+				toRemove.add(fortProjectile);
+			}
+		}
+		projectileList.removeAll(toRemove);
 	}
 	
 	public void setNumProjectiles(int numProjectiles) {
@@ -74,5 +85,9 @@ public class Weapon {
 	
 	public ArrayList<Projectile> getProjectiles() {
 		return projectileList;
+	}
+	
+	public ArrayList<Projectile> getFortProjectiles() {
+		return fortProjectileList;
 	}
 }

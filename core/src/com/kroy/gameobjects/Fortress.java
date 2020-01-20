@@ -34,10 +34,10 @@ public class Fortress extends GameObject{
     	return this.weapon.getNumProjectiles();
     }
 	
-	public void fireWeapon(Vector2 truckPosition, int weaponCount,
-			ArrayList<Fortress> fortressList, ArrayList<Firetruck> truckList) {
-    	this.weapon.fire(new Vector2(truckPosition), this.position, weaponCount, fortressList, truckList);
-    }
+	//public void fireWeapon(Vector2 truckPosition, int weaponCount,
+	//		ArrayList<Fortress> fortressList, ArrayList<Firetruck> truckList) {
+    //	this.weapon.fire(new Vector2(truckPosition), this.position, weaponCount, fortressList, truckList);
+    //}
 	
 	public int findTrucks(ArrayList<Firetruck> truckList, int weaponCount, ArrayList<Fortress> fortressList) {
 		for (double x=  this.position.x-2*45; x<=this.position.x+2*45; x+=1) {

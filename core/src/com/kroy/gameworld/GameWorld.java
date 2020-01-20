@@ -41,7 +41,7 @@ public class GameWorld {
     	this.fortressList.add(generateFortress(new Vector2(Math.round(29.5f*45),Math.round(33.5f*45))));
     	this.fortressList.add(generateFortress(new Vector2(Math.round(5.5f*45),Math.round(6.5f*45))));
     	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
-    	weaponCount = 20;
+    	weaponCount = 61;
     }
 
     public void update(float delta) {
@@ -73,6 +73,13 @@ public class GameWorld {
     		}
     		fortressList.removeAll(toRemove);
     	}
+    	ArrayList<Firetruck> truckToRemove = new ArrayList<Firetruck>();
+    	for (Firetruck truck: truckList) {
+    		if (truck.getHpCurrent() == 0) {
+    			truckToRemove.add(truck);
+    		}
+    	}
+    	truckList.removeAll(truckToRemove);
     	isWon(fortressList);
     	fStation.update(delta);
 	}

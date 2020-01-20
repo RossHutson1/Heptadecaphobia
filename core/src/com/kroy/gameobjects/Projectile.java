@@ -10,14 +10,14 @@ public class Projectile {
 	
 	int damage;
 	double dX, dY;
-	boolean remove, stopX, stopY;
+	boolean remove, stopX, stopY, truckWeapon;
 	ArrayList<Fortress> fortressList1;
+	Firetruck truck1;
 	private float angle, speed;
 	private Vector2 targetPosition, currentPosition1;
-	//image texture;
 	
 	public Projectile(int damage, float speed, Vector2 targetPosition,
-			Vector2 weaponPosition, ArrayList<Fortress> fortressList) {
+			Vector2 weaponPosition, ArrayList<Fortress> fortressList, Firetruck truck, boolean truckWeapon) {
 		this.damage = damage;
 		this.speed = speed;
 		this.targetPosition = targetPosition;
@@ -26,6 +26,8 @@ public class Projectile {
 		this.stopX = false;
 		this.stopY = false;
 		fortressList1 = fortressList;
+		truck1 = truck;
+		this.truckWeapon = truckWeapon;
 		
 		this.dX = (int) (this.targetPosition.x - this.currentPosition1.x);
 		this.dY = (int) (this.targetPosition.y - this.currentPosition1.y);
@@ -54,15 +56,22 @@ public class Projectile {
 			this.currentPosition1.y += moveY;
 		}
 		
-		if (this.stopX && this.stopY) {
-			this.remove = true;
-			for (Fortress fort : fortressList1) {
-				if (fort.getPosition().toString().equals(this.targetPosition.toString())) {
-					fort.damage(this.damage);
+		if (this.truckWeapon) {
+			if (this.stopX && this.stopY) {
+				this.remove = true;
+				for (Fortress fort : fortressList1) {
+					if (fort.getPosition().toString().equals(this.targetPosition.toString())) {
+						fort.damage(this.damage);
+					}
+				}
+			}
+		} else {
+			if (this.stopX && this.stopY) {
+				this.remove = true;
+				truck1.damage(this.damage);
 				}
 			}
 		}
-	}
 	
 	public Vector2 getPosition() {
 		return this.currentPosition1;

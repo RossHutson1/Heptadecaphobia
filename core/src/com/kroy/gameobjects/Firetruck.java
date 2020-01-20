@@ -19,7 +19,6 @@ public class Firetruck extends GameObject{
     private int goalX;
     private int goalY;
     private int water;
-    private int health;
     public MapGrid mGrid;
     
     private boolean notDestroyed;
@@ -37,7 +36,7 @@ public class Firetruck extends GameObject{
         this.mGrid = new MapGrid();
         this.rotation = 0f;
         this.water = firehose.getWater();
-        this.health = 10;
+        this.hpCurrent = this.hpMax;
     }
 
     public void update(float delta) {
@@ -133,10 +132,6 @@ public class Firetruck extends GameObject{
     
     public int getWater() {
     	return this.water;
-    }
-    
-    public int getHealth() {
-    	return this.health;
     }
     
     public boolean notDestroyed() {
