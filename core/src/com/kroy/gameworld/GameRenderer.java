@@ -31,7 +31,10 @@ private Texture backgroundTexture, minsterTexture;
 private Sprite background;
 
 private FPSLogger fps;
-
+/**
+ * Method to set up the GameRenderer for the GameWorld
+ * @param world The main gameWorld for KroyGame
+ */
 public GameRenderer(GameWorld world) {
     myWorld = world;
     world.setRenderer(this);
@@ -58,19 +61,29 @@ public GameRenderer(GameWorld world) {
     mGrid = new MapGrid();
     
 }
-
+/**
+ * Function to initialise the firetrucks
+ */
 private void initGameObjects() {
     trucks = myWorld.getFiretrucks();
 }
-
+/**
+ * Accesor method for the input handler
+ * @return
+ */
 public InputHandler getInputHandler() {
 	return this.inputHandler;
 }
-
+/**
+ * Accessor method for the camera zoom
+ * @return
+ */
 public float getZoom() {
 	return cam.zoom;
 }
-
+/**
+ * Initialises the textures to variables
+ */
 private void initAssets() {
     truckAnimation = AssetLoader.truckAnimation;
     truckStraight = AssetLoader.truck;
@@ -83,7 +96,10 @@ private void initAssets() {
     background.flip(false,  true);
 //    background.setScale(0.945f);
 }
-
+/**
+ * Render loop for different game states
+ * @param runTime time the program has been running
+ */
 public void render(float runTime) {
 
     // Fill the entire screen with black, to prevent potential flickering.
@@ -119,14 +135,18 @@ public void render(float runTime) {
     }
     fps.log();
 }
-
+/**
+ * The display method for the start menu
+ */
 public void startMenu() {
 	batcher.begin();
 	AssetLoader.shadow.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
     AssetLoader.font.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
     batcher.end();
 }
-
+/**
+ * The display method if the game is lost
+ */
 public void gameLost() {
 	Gdx.gl.glClearColor(171 / 255.0f, 33 / 255.0f, 12 / 255.0f, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -136,7 +156,9 @@ public void gameLost() {
     AssetLoader.font.draw(batcher, "You LOSE", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
     batcher.end();
 }
-
+/**
+ * Display method if the game is won
+ */
 public void gameWon() {
 	Gdx.gl.glClearColor(14 / 255.0f, 153 / 255.0f, 46 / 255.0f, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -150,7 +172,10 @@ public void gameWon() {
     AssetLoader.font.draw(batcher, "You WIN", Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 8f);
     batcher.end();
 }
-
+/**
+ * Main rendering method for sprites and shapes
+ * @param runTime the time the program has been running
+ */
 public void gameRunning(float runTime) {
 	for (int i = 0; i < trucks.size(); i++) {
 		batcher.begin();
@@ -191,7 +216,9 @@ public void gameRunning(float runTime) {
 	batcher.end();
 	}
 }
-
+/**
+ * method to move the location and zoom of the camera
+ */
 public void moveCamera() {
 	Vector2 cameraD = this.inputHandler.getCameraDelta();
 	float zoom = this.inputHandler.getZoom();
@@ -201,11 +228,17 @@ public void moveCamera() {
 	}
 	cam.update();
 }
-
+/**
+ * Accessor method to get camera position
+ * @return Returns a Vector3 containing the camera position
+ */
 public Vector3 getCameraPos() {
 	return new Vector3(cam.position);
 }
-
+/**
+ * Method to get the offset of the camera from the origin
+ * @return a Vector2 containing the offset
+ */
 public Vector2 getOffset() {
 	Vector2 temp = new Vector2(0,0);
 	temp.add(cam.viewportWidth / 2f, cam.viewportHeight / 2f);

@@ -13,6 +13,9 @@ public class KroyGame extends Game {
 	
 	int test = 3;
 	ArrayList<Object> fortressList = new ArrayList<Object>();
+	/**
+	 * Method to start assetLoader and set up a screen
+	 */
 	@Override
 	public void create() {
 		Gdx.app.log("Game", "created");
@@ -20,14 +23,12 @@ public class KroyGame extends Game {
 		setScreen(new GameScreen());
 		
 	}
-	
+	/**
+	 * Method to close the game
+	 */
 	@Override
 	public void dispose () {
 		super.dispose();
-	}
-	
-	public int getTest() {
-		return test;
 	}
 
 }

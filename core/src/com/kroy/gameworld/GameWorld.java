@@ -23,11 +23,12 @@ public class GameWorld {
     private int weaponCount;
     
     public enum GameState {
-
         READY, RUNNING, GAMEWON, GAMELOST
-
     }
-
+    /**
+     * Initialising method for gameWorld that creates needed instances of various gameObjects
+     * @param midPointY
+     */
     public GameWorld (int midPointY) {
     	Firetruck truck1 = new Firetruck(0, 3, 76, 105);
     	Firetruck truck2 = new Firetruck(17, 9, 76, 105);
@@ -37,13 +38,16 @@ public class GameWorld {
     	this.selectedTruck = truck1;
     	currentState = GameState.READY;
     	this.fortressList = new ArrayList<Fortress>();
-    	this.fortressList.add(generateFortress(new Vector2(Math.round(36.5f*45),Math.round(1.5f*45))));
-    	this.fortressList.add(generateFortress(new Vector2(Math.round(29.5f*45),Math.round(33.5f*45))));
-    	this.fortressList.add(generateFortress(new Vector2(Math.round(5.5f*45),Math.round(6.5f*45))));
+    	this.fortressList.add(generateFortress(10, new Vector2(Math.round(36.5f*45),Math.round(1.5f*45))));
+    	this.fortressList.add(generateFortress(10, new Vector2(Math.round(29.5f*45),Math.round(33.5f*45))));
+    	this.fortressList.add(generateFortress(10, new Vector2(Math.round(5.5f*45),Math.round(6.5f*45))));
     	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
     	weaponCount = 41;
     }
-
+    /**
+     * method to update the current state
+     * @param delta the time between 2 frames
+     */
     public void update(float delta) {
     	switch (currentState) {
     	case READY:
@@ -55,7 +59,10 @@ public class GameWorld {
     		break;
     	}
     }
-
+    /**
+     * update method when game is in running state
+     * @param delta time between frames
+     */
     private void updateRunning(float delta) {
     	if (weaponCount > 0) {
     		weaponCount -= 1;
@@ -83,7 +90,7 @@ public class GameWorld {
     	isWon(fortressList);
     	fStation.update(delta);
 	}
-
+    
 	private void updateReady(float delta) {
 		// TODO Auto-generated method stub
 	}
@@ -95,12 +102,17 @@ public class GameWorld {
 	public ArrayList<Fortress> getFortList() {
 		return fortressList;
 	}
-	
-	public static Fortress generateFortress(Vector2 position) {
-		Fortress newFortress = new Fortress(10,position);
+	/**
+	 * Function used to instantiate instances of Fortress
+	 * @param health the fortress' health as an int
+	 * @param position Vector2 containing it's x and y position
+	 * @return the instance of Fortress
+	 */
+	public static Fortress generateFortress(int health, Vector2 position) {
+		Fortress newFortress = new Fortress(health, position);
 		return newFortress;
 	}
-    
+    // Methods to check game state
     public boolean isReady() {
     	return currentState == GameState.READY;
     }
@@ -109,6 +121,10 @@ public class GameWorld {
     	return currentState == GameState.RUNNING;
     }
     
+    public boolean isGameOver() {
+        return (currentState == GameState.GAMEWON || currentState == GameState.GAMELOST);
+    }
+    //Methods to change game state
     public void start() {
         currentState = GameState.RUNNING;
     }
@@ -119,21 +135,24 @@ public class GameWorld {
     		truckList.get(i).onRestart();
     	}
     }
-
-    public boolean isGameOver() {
-        return (currentState == GameState.GAMEWON || currentState == GameState.GAMELOST);
-    }
-    
+    /**
+     * Method to set the gameWorld's renderer
+     * @param r the GameRenderer instance
+     */
     public void setRenderer(GameRenderer r) {
     	renderer = r;
     }
-    
+
     public Vector2 lockGoal(int x, int y) {
     	Vector2 newGoal = new Vector2(0, 0);
     	newGoal.add(x - (x%45) + (45/2),y - (y%45) + (45/2));
     	return newGoal;
     }
-    
+    /**
+     * Static method to check if game is won and change state
+     * @param fortressList the list of Fortress instances
+     * @return boolean if game is won or not
+     */
     public static boolean isWon(ArrayList<Fortress> fortressList) {
 		if (fortressList.isEmpty()) {
 			currentState = GameState.GAMEWON;
@@ -142,7 +161,11 @@ public class GameWorld {
 			return false;
 		}
 	}
-    
+    /**
+     * Static method to check if game is lost and change state
+     * @param firetruckList the list of Firetruck instances
+     * @return boolean if game is lost or not
+     */
     public static boolean isLost(ArrayList<Firetruck> firetruckList) {
 		if (firetruckList.isEmpty()) {
 			currentState = GameState.GAMELOST;
@@ -152,7 +175,11 @@ public class GameWorld {
 			return false;
 		}
 	}
-    
+    /**
+     * Method to react to user input of a click
+     * @param x x-coordinate of the click
+     * @param y y-coordinate of the click
+     */
     public void onClick(int x, int y) {
     	float zoom = renderer.getZoom();
     	int w = Gdx.graphics.getWidth();

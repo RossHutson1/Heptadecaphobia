@@ -13,16 +13,20 @@ public class Weapon {
 	private int numProjectiles;
 	ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 	ArrayList<Projectile> fortProjectileList = new ArrayList<Projectile>();
-	//private image texture;//change type
-	
+	/**
+	 * Method to initialise instance of Weapon
+	 * @param firerate rate of fire of the weapon (unused)
+	 * @param range range of weapon (unused)
+	 * @param numProjectiles number of projectiles weapon can fire before refill
+	 */
 	public Weapon(int firerate, int range, int numProjectiles) {
 		this.damage = 1;
 		this.firerate = firerate;
 		this.range = range;
 		this.animate = false;
 		this.numProjectiles = numProjectiles;
-		//this.texture = texture;
 	}
+	
 	public int fire(Vector2 fortPosition, Vector2 truckPosition, int weaponCount,
 			ArrayList<Fortress> fortressList, Firetruck truck) {
 		Gdx.app.log("WEAPON COUNT", "" + weaponCount);
@@ -41,21 +45,23 @@ public class Weapon {
 		}
 		return weaponCount;
 	}
+	
 	public int getDamage() {
 		return this.damage;
 	}
+	
 	public int getWater() {
 		return this.numProjectiles;
 	}
+	
 	public int getFirerate() {
 		return this.firerate;
 	}
+	
 	public int getRange() {
 		return this.range;
 	}
-	public void draw() {
-		
-	}
+	
 	public void update(float delta) {
 		ArrayList<Projectile> toRemove = new ArrayList<Projectile>();
 		for(Projectile projectile: this.projectileList) {
