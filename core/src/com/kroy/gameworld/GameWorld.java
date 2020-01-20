@@ -24,7 +24,7 @@ public class GameWorld {
     
     public enum GameState {
 
-        READY, RUNNING, GAMEOVER
+        READY, RUNNING, GAMEWON, GAMELOST
 
     }
 
@@ -121,7 +121,7 @@ public class GameWorld {
     }
 
     public boolean isGameOver() {
-        return currentState == GameState.GAMEOVER;
+        return (currentState == GameState.GAMEWON || currentState == GameState.GAMELOST);
     }
     
     public void setRenderer(GameRenderer r) {
@@ -136,16 +136,16 @@ public class GameWorld {
     
     public static boolean isWon(ArrayList<Fortress> fortressList) {
 		if (fortressList.isEmpty()) {
-			currentState = GameState.GAMEOVER;
+			currentState = GameState.GAMEWON;
 			return true;
 		} else {
 			return false;
 		}
 	}
     
-    public static boolean isLost(ArrayList<Object> firetruckList) {
+    public static boolean isLost(ArrayList<Firetruck> firetruckList) {
 		if (firetruckList.isEmpty()) {
-			currentState = GameState.GAMEOVER;
+			currentState = GameState.GAMELOST;
 			return true;
 		}
 		else {
@@ -180,10 +180,6 @@ public class GameWorld {
 	    			Vector2 goal = lockGoal(x, y);
 	    			this.selectedTruck.setGoal((int) goal.x, (int) goal.y);
 	    		}
-    		break;
-
-    	case GAMEOVER:
-    		this.restart();
     		break;
 }    	
     }

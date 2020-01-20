@@ -109,8 +109,10 @@ public void render(float runTime) {
 
     if (myWorld.isReady()) {
         startMenu();
-    } else if (myWorld.isGameOver()) {
-    	gameOver();
+    } else if (myWorld.isLost(trucks)) {
+    	gameLost();
+    } else if (myWorld.isWon(myWorld.getFortList())) {
+    	gameWon();
     } else if (myWorld.isRunning()) {
     	gameRunning(runTime);
     	moveCamera();
@@ -125,10 +127,27 @@ public void startMenu() {
     batcher.end();
 }
 
-public void gameOver() {
+public void gameLost() {
+	Gdx.gl.glClearColor(171 / 255.0f, 33 / 255.0f, 12 / 255.0f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
 	batcher.begin();
-	AssetLoader.shadow.draw(batcher, "Game Over", 25, 56);
-    AssetLoader.font.draw(batcher, "Game Over", 24, 55);
+	AssetLoader.shadow.draw(batcher, "You LOSE", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
+    AssetLoader.font.draw(batcher, "You LOSE", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
+    batcher.end();
+}
+
+public void gameWon() {
+	Gdx.gl.glClearColor(14 / 255.0f, 153 / 255.0f, 46 / 255.0f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    shapeRenderer.begin(ShapeType.Filled);
+    shapeRenderer.setColor(14 / 255.0f, 153 / 255.0f, 46 / 255.0f, 1);
+    shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    shapeRenderer.end();
+    cam.position.set(0, 0, 0);
+	batcher.begin();
+	AssetLoader.shadow.draw(batcher, "You WIN", Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 8f);
+    AssetLoader.font.draw(batcher, "You WIN", Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 8f);
     batcher.end();
 }
 
