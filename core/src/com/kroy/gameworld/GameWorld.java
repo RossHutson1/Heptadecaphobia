@@ -41,7 +41,7 @@ public class GameWorld {
     	this.fortressList.add(generateFortress(new Vector2(Math.round(29.5f*45),Math.round(33.5f*45))));
     	this.fortressList.add(generateFortress(new Vector2(Math.round(5.5f*45),Math.round(6.5f*45))));
     	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
-    	weaponCount = 61;
+    	weaponCount = 41;
     }
 
     public void update(float delta) {
@@ -134,9 +134,22 @@ public class GameWorld {
     	return newGoal;
     }
     
-    public static void isWon(ArrayList<Fortress> fortressList) {
+    public static boolean isWon(ArrayList<Fortress> fortressList) {
 		if (fortressList.isEmpty()) {
 			currentState = GameState.GAMEOVER;
+			return true;
+		} else {
+			return false;
+		}
+	}
+    
+    public static boolean isLost(ArrayList<Object> firetruckList) {
+		if (firetruckList.isEmpty()) {
+			currentState = GameState.GAMEOVER;
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
     
@@ -167,7 +180,6 @@ public class GameWorld {
 	    			Vector2 goal = lockGoal(x, y);
 	    			this.selectedTruck.setGoal((int) goal.x, (int) goal.y);
 	    		}
-        	
     		break;
 
     	case GAMEOVER:

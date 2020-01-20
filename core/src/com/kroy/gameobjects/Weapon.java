@@ -37,7 +37,7 @@ public class Weapon {
 			fortProjectileList.add(new Projectile(this.damage,5,new Vector2(truck.getPosition()),
 					new Vector2(fortPosition), fortressList, truck, false));
 			Gdx.app.log("FORT-PROJECTILE", "FIRE");
-			weaponCount = 61;
+			weaponCount = 41;
 		}
 		return weaponCount;
 	}
@@ -69,10 +69,10 @@ public class Weapon {
 		for(Projectile fortProjectile: this.fortProjectileList) {
 			fortProjectile.update(delta);
 			if (fortProjectile.remove) {
-				toRemove.add(fortProjectile);
+				fortToRemove.add(fortProjectile);
 			}
 		}
-		projectileList.removeAll(toRemove);
+		fortProjectileList.removeAll(fortToRemove);
 	}
 	
 	public void setNumProjectiles(int numProjectiles) {

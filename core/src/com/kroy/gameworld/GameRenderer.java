@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameobjects.Projectile;
+import com.kroy.gameobjects.Fortress;
 import com.kroy.helpers.AssetLoader; import com.badlogic.gdx.graphics.g2d.Animation; import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameRenderer {
@@ -143,6 +144,15 @@ public void gameRunning(float runTime) {
 		
 		ArrayList<Projectile> projectileList = truck.getWeapon().getProjectiles();
 		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(242 / 255.0f, 132 / 255.0f, 15 / 255.0f, 1);
+		ArrayList<Fortress> fortressList = myWorld.getFortList();
+		for (Fortress fort: fortressList) {
+			if (fort.getPosition().x == Math.round(36.5f*45)) {
+				shapeRenderer.rect(fort.getPosition().x - 45/2, fort.getPosition().y - 45/2, 90, 90);
+			} else {
+				shapeRenderer.rect(fort.getPosition().x - 45/2, fort.getPosition().y - 45/2, 45, 45);
+			}
+		}
 		shapeRenderer.setColor(47 / 255.0f, 221 / 255.0f, 237 / 255.0f, 1);
 		shapeRenderer.rect(truck.getX() - 25, truck.getY() - 30, truck.getWater() * 5, 10);
 		for (Projectile projectile: projectileList) {

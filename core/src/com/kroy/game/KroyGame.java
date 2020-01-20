@@ -29,35 +29,5 @@ public class KroyGame extends Game {
 	public int getTest() {
 		return test;
 	}
-	public static boolean isLost(ArrayList<Object> firetruckList) {
-		
-		if (firetruckList.isEmpty()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-		
-	}
-	/*/
-	public void objectHit(GameObject object, Projectile projectile) {
-		if (projectile.getPosition() == object.getPosition()) {
-			object.damage();
-		}
-	}
-	public static FireTruck generateFireTruck() {
-		FireTruck newTruck = new FireTruck(0, 0);
-		return newTruck;
-	}
-	
-	public static Patrol spawnPatrol() {
-		Patrol newPatrol = new Patrol(0);
-		return newPatrol;
-	}
-	
-	public static Fortress generateFortress() {
-		Fortress newFortress = new Fortress(0);
-		return newFortress;
-	}
-	/*/
+
 }
