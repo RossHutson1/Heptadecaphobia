@@ -26,16 +26,6 @@ public class KroyGame extends Game {
 		super.dispose();
 	}
 	
-	public static boolean isWon(ArrayList<Object> fortressList) {
-		
-		if (fortressList.isEmpty()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-		
-	}
 	public int getTest() {
 		return test;
 	}

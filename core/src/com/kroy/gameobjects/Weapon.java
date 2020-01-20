@@ -12,6 +12,7 @@ public class Weapon {
 	private Vector2 position = new Vector2();
 	private int numProjectiles;
 	ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
+	ArrayList<Projectile> fortProjectileList = new ArrayList<Projectile>();
 	//private image texture;//change type
 	
 	public Weapon(int firerate, int range, int numProjectiles) {
@@ -22,18 +23,26 @@ public class Weapon {
 		this.numProjectiles = numProjectiles;
 		//this.texture = texture;
 	}
-	public int fire(Vector2 fortPosition, Vector2 truckPosition, int weaponCount) {
-		if (weaponCount == 0) {
+	public int fire(Vector2 fortPosition, Vector2 truckPosition, int weaponCount,
+			ArrayList<Fortress> fortressList, Firetruck truck) {
+		if (weaponCount%20 == 0) {
 			if (this.numProjectiles > 0) {
 				this.numProjectiles -=1;
-				projectileList.add(new Projectile(this.damage,5,fortPosition,truckPosition));
+				projectileList.add(new Projectile(this.damage,5,new Vector2(fortPosition),
+						new Vector2(truckPosition), fortressList));
 			}
-			weaponCount = 20;
+		}
+		if (weaponCount == 0) {
+			fortProjectileList.add(new Projectile(this.damage,5,new Vector2(truck.getPosition()), new Vector2(fortPosition), fortressList));
+			weaponCount = 40;
 		}
 		return weaponCount;
 	}
 	public int getDamage() {
 		return this.damage;
+	}
+	public int getWater() {
+		return this.numProjectiles;
 	}
 	public int getFirerate() {
 		return this.firerate;
@@ -54,9 +63,15 @@ public class Weapon {
 		}
 		projectileList.removeAll(toRemove);
 	}
+	
 	public void setNumProjectiles(int numProjectiles) {
 		this.numProjectiles = numProjectiles;
 	}
+	
+	public int getNumProjectiles() {
+		return this.numProjectiles;
+	}
+	
 	public ArrayList<Projectile> getProjectiles() {
 		return projectileList;
 	}

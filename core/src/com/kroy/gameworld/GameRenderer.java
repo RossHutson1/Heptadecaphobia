@@ -66,6 +66,10 @@ public InputHandler getInputHandler() {
 	return this.inputHandler;
 }
 
+public float getZoom() {
+	return cam.zoom;
+}
+
 private void initAssets() {
     truckAnimation = AssetLoader.truckAnimation;
     truckStraight = AssetLoader.truck;
@@ -86,6 +90,7 @@ public void render(float runTime) {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     
     batcher.setProjectionMatrix(cam.combined);
+    shapeRenderer.setProjectionMatrix(cam.combined);
     
     if (myWorld.isReady()) {
     	shapeRenderer.begin(ShapeType.Filled);
@@ -100,11 +105,7 @@ public void render(float runTime) {
     	background.draw(batcher);
     	batcher.end();
     }
-    
-    // Begin SpriteBatch
-    batcher.begin();
-    //batcher.enableBlending();
-    
+
     if (myWorld.isReady()) {
         startMenu();
     } else if (myWorld.isGameOver()) {
@@ -114,36 +115,46 @@ public void render(float runTime) {
     	moveCamera();
     }
     fps.log();
-    // End SpriteBatch
-    batcher.end();
 }
 
 public void startMenu() {
+	batcher.begin();
 	AssetLoader.shadow.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
     AssetLoader.font.draw(batcher, "Click to Start", Gdx.graphics.getWidth() / 2f - 180, Gdx.graphics.getHeight() / 8f);
+    batcher.end();
 }
 
 public void gameOver() {
+	batcher.begin();
 	AssetLoader.shadow.draw(batcher, "Game Over", 25, 56);
-    AssetLoader.font.draw(batcher, "Game Over", 24, 55);	
+    AssetLoader.font.draw(batcher, "Game Over", 24, 55);
+    batcher.end();
 }
 
 public void gameRunning(float runTime) {
 	for (int i = 0; i < trucks.size(); i++) {
+		batcher.begin();
 		Firetruck truck = trucks.get(i);
 		batcher.draw((TextureRegion) truckAnimation.getKeyFrame(runTime),  truck.getX()-(truck.getWidth()/2),
     		truck.getY()-(truck.getHeight()/2), 36f,
     		52.5f, truck.getWidth(), truck.getHeight(),
     		0.3f, 0.3f, truck.getRotation());
+		batcher.end();
 		
 		ArrayList<Projectile> projectileList = truck.getWeapon().getProjectiles();
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(47 / 255.0f, 221 / 255.0f, 237 / 255.0f, 1);
+		shapeRenderer.rect(truck.getX() - 25, truck.getY() - 30, truck.getWater() * 5, 10);
 		for (Projectile projectile: projectileList) {
-			shapeRenderer.circle(projectile.getPosition().x, projectile.getPosition().y, 3f);
+			shapeRenderer.circle(projectile.getPosition().x,
+					projectile.getPosition().y, 5f);
 		}
+		shapeRenderer.setColor(52 / 255.0f, 237 / 255.0f, 71 / 255.0f, 1);
+		shapeRenderer.rect(truck.getX() - 25, truck.getY() - 45, truck.getHealth() * 5, 10);
 		shapeRenderer.end();
-	batcher.draw(minsterTexture, 1665, 90);
+	batcher.begin();
+	batcher.draw(minsterTexture, 1620, 45);
+	batcher.end();
 	}
 }
 

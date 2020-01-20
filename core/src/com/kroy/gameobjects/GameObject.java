@@ -9,7 +9,7 @@ import java.lang.Math;
 public abstract class GameObject {
 	
 	protected Vector2 position;
-	protected int hpMax;
+	protected int hpMax = 10;
 	protected int hpCurrent;
 	protected ArrayList<Image> texture;
 	protected int damage = 1;
@@ -26,12 +26,12 @@ public abstract class GameObject {
 		return this.hpCurrent;
 	};
 
-	public boolean damage() {
-		if (damage > this.hpCurrent) {
+	public boolean damage(int damageTaken) {
+		if (damageTaken > this.hpCurrent) {
 			this.hpCurrent = 0;
 			return true;
 		}
-		this.hpCurrent = this.hpCurrent - damage;
+		this.hpCurrent -= damage;
 		return false;
 	};
 

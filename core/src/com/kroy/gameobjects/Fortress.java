@@ -10,18 +10,15 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Fortress extends GameObject{
 
-	int waterCapacity; // amount of water to defeat aliens within fortress
-	int waterLevel; // amount of water currently in the fortress
 	int level; // how strong the fortress is
 	int pumpSpeed; // Speed at which water is drained from fortress
-	//Weapon weapon; // Used for the fortress to shoot at the fireTrucks
+	private Weapon weapon= new Weapon(1,3,10);
 	
 	public Fortress(int waterCapacityInitial, Vector2 position) {
 		this.position = position;
-		this.waterCapacity = waterCapacityInitial; 
-		this.waterLevel = 0;
 		this.level = 1;
 		this.pumpSpeed = 1; 
+		this.hpCurrent = this.hpMax;
 		//this.weapon = new Weapon();
 	}
 	
@@ -33,16 +30,26 @@ public class Fortress extends GameObject{
 		
 	}
 	
-	public int findTrucks(ArrayList<Firetruck> trucklist, int weaponCount) {
+	public int getNumProjectiles() {
+    	return this.weapon.getNumProjectiles();
+    }
+	
+	public void fireWeapon(Vector2 truckPosition, int weaponCount,
+			ArrayList<Fortress> fortressList, ArrayList<Firetruck> truckList) {
+    	this.weapon.fire(new Vector2(truckPosition), this.position, weaponCount, fortressList, truckList);
+    }
+	
+	public int findTrucks(ArrayList<Firetruck> truckList, int weaponCount, ArrayList<Fortress> fortressList) {
 		for (double x=  this.position.x-2*45; x<=this.position.x+2*45; x+=1) {
 			for (double y=  this.position.y-2*45; y<=this.position.y+2*45; y+=1) {
-				for (Firetruck truck : trucklist) {
+				for (Firetruck truck : truckList) {
 					if (x == (truck.getX()) && y == (truck.getY())) {
-						weaponCount = truck.fireWeapon(this.position, weaponCount);
+						weaponCount = truck.fireWeapon(this.position, weaponCount, fortressList, truck);
 					}
 				}
 			}
 		}
 		return weaponCount;
 	}
+	
 }

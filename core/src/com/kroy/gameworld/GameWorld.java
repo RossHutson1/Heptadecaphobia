@@ -7,6 +7,8 @@ import com.kroy.gameobjects.FireStation;
 import com.kroy.gameobjects.Firetruck;
 import com.kroy.gameobjects.Fortress;
 import com.kroy.gameobjects.GameObject;
+import com.kroy.gameobjects.Projectile;
+
 import java.lang.Math;
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class GameWorld {
     private FireStation fStation;
     private ArrayList<Firetruck> truckList;
     private ArrayList<Fortress> fortressList;
-    private GameState currentState; 
+    private static GameState currentState; 
     private GameRenderer renderer;
     public MapGrid map;
     private int weaponCount;
@@ -35,9 +37,9 @@ public class GameWorld {
     	this.selectedTruck = truck1;
     	currentState = GameState.READY;
     	this.fortressList = new ArrayList<Fortress>();
-    	this.fortressList.add(generateFortress(new Vector2(37*45,2*45)));
-    	this.fortressList.add(generateFortress(new Vector2(30*45,34*45)));
-    	this.fortressList.add(generateFortress(new Vector2(6*45,7*45)));
+    	this.fortressList.add(generateFortress(new Vector2(Math.round(36.5f*45),Math.round(1.5f*45))));
+    	this.fortressList.add(generateFortress(new Vector2(Math.round(29.5f*45),Math.round(33.5f*45))));
+    	this.fortressList.add(generateFortress(new Vector2(Math.round(5.5f*45),Math.round(6.5f*45))));
     	fStation = new FireStation(1, 90, 45, truckList, new Vector2(36*45, 27*45));
     	weaponCount = 20;
     }
@@ -62,10 +64,16 @@ public class GameWorld {
     	}
     	for (int i = 0; i < truckList.size(); i++){
     		truckList.get(i).update(delta);
+    		ArrayList<Fortress> toRemove = new ArrayList<Fortress>();
     		for(Fortress fort: this.fortressList) {
-    			weaponCount = fort.findTrucks(this.truckList, weaponCount);
+    			weaponCount = fort.findTrucks(this.truckList, weaponCount, fortressList);
+    			if (fort.getHpCurrent() == 0) {
+    				toRemove.add(fort);
+    			}
     		}
+    		fortressList.removeAll(toRemove);
     	}
+    	isWon(fortressList);
     	fStation.update(delta);
 	}
 
@@ -119,7 +127,18 @@ public class GameWorld {
     	return newGoal;
     }
     
+    public static void isWon(ArrayList<Fortress> fortressList) {
+		if (fortressList.isEmpty()) {
+			currentState = GameState.GAMEOVER;
+		}
+	}
+    
     public void onClick(int x, int y) {
+    	float zoom = renderer.getZoom();
+    	int w = Gdx.graphics.getWidth();
+    	int h = Gdx.graphics.getHeight();
+    	x = (int) (((x - w/2) * zoom) + w/2);
+    	y = (int) (((y - h/2) * zoom) + h/2);
     	Vector3 cPos = renderer.getCameraPos();
     	Vector2 offset = renderer.getOffset();
     	x = x + ((int) cPos.x - (int) offset.x);

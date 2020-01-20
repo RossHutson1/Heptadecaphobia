@@ -1,5 +1,7 @@
 package com.kroy.gameobjects;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.kroy.gameworld.MapGrid;
@@ -16,6 +18,8 @@ public class Firetruck extends GameObject{
     private int offsetY;
     private int goalX;
     private int goalY;
+    private int water;
+    private int health;
     public MapGrid mGrid;
     
     private boolean notDestroyed;
@@ -32,6 +36,8 @@ public class Firetruck extends GameObject{
         this.notDestroyed = false;
         this.mGrid = new MapGrid();
         this.rotation = 0f;
+        this.water = firehose.getWater();
+        this.health = 10;
     }
 
     public void update(float delta) {
@@ -94,6 +100,7 @@ public class Firetruck extends GameObject{
     			}
     		}
     	this.firehose.update(delta);
+    	this.water = this.firehose.getWater();
     }
 
     public void onClick(int mouseX, int mouseY) {
@@ -122,6 +129,14 @@ public class Firetruck extends GameObject{
     
     public Weapon getWeapon() {
     	return this.firehose;
+    }
+    
+    public int getWater() {
+    	return this.water;
+    }
+    
+    public int getHealth() {
+    	return this.health;
     }
     
     public boolean notDestroyed() {
@@ -163,8 +178,9 @@ public class Firetruck extends GameObject{
     	this.hpCurrent = this.hpMax;
     }
     
-    public int fireWeapon(Vector2 fortPosition, int weaponCount) {
-    	weaponCount = this.firehose.fire(fortPosition, this.position, weaponCount);
+    public int fireWeapon(Vector2 fortPosition, int weaponCount,
+    		ArrayList<Fortress> fortressList, Firetruck truck) {
+    	weaponCount = this.firehose.fire(fortPosition, this.position, weaponCount, fortressList, truck);
     	return weaponCount;
     }
 

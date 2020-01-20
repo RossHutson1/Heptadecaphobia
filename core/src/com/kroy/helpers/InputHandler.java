@@ -67,20 +67,6 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		myWorld.onClick(Gdx.input.getX(), Gdx.input.getY());
-		/*/
-		if (myWorld.isReady()) {
-			myWorld.start();
-		} else if (myWorld.isRunning()) {
-			mouseX = Gdx.input.getX();
-			mouseY = Gdx.input.getY();
-			myTruck.onClick(mouseX, mouseY);
-		}
-
-		if (myWorld.isGameOver()) {
-			myWorld.restart();
-		}
-		/*/
-		
 		return true;
 	}
 
